@@ -7,44 +7,47 @@
 int main()
 {
     List *a;
-	int v = 10;
-	int b;
+    int v;
+    List_Foreach_Variable;
 
-    a = LIST_CreateNew(sizeof(int));
+    a = List_CreateNew(4);
 	if(0==a){
 		printf("Create New list failed!\n");
 		return 0;
 	}
 	
     v=0;
-    LIST_Append(a,(void*)&v);
+    List_Append(a,(void*)&v);
     v=1;
-    LIST_Append(a,(void*)&v);
+    List_Append(a,(void*)&v);
     v=2;
-    LIST_Append(a,(void*)&v);
+    List_Append(a,(void*)&v);
     v=3;
-    LIST_Append(a,(void*)&v);
+    List_Append(a,(void*)&v);
     v=4;
-    LIST_Append(a,(void*)&v);
+    List_Append(a,(void*)&v);
     v=5;
-    LIST_Append(a,(void*)&v);
-//    v=4;
-//    LIST_PushBack(a,(void*)&v);
-//    v=9;
-//    LIST_PushFront(a,(void*)&v);
-//    v=3;
-//    LIST_Insert(a,(void*)&v,2);
+    List_Append(a,(void*)&v);
+    List_Append(a,(void*)&v);
 
-//    LIST_RemoveAt(a,5);
-//    LIST_RemoveFrist(a);
-//    LIST_RemoveLast(a);
+    int val;
 
-    LIST_RemoveAt(a,3);
-
-    MListForeach(&b,a){
-        printf("%d = %d\n",MList_g_num+1,b);
+    List_Foreach(a){
+        val = *(int*)List_Foreach_Value;
+        if(2==val){
+            List_Foreach_RmCurNode;
+            continue;
+        }
+        printf("%d----------\n",val);
     }
-    LIST_Delete(a);
+
+    val = 2;
+
+    printf("size of list %d\n",List_Count(a));
+    printf("value size of list %d\n",List_ValueCount(a,(void*)&val));
+    printf("index of \'%d\' is %d\n",val,List_Indexof(a,&val));
+
+    List_Clear(a);
 
     return 0;
 }

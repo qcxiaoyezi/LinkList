@@ -415,7 +415,7 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../main.c 
+main.o: ../main.c ../linklist.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o main.o ../main.c
 
 linklist.o: ../linklist.c ../linklist.h
