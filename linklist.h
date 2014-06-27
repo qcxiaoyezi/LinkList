@@ -15,6 +15,7 @@ typedef struct ListNode{
 
 typedef struct List{
     int size;
+    int count;
     ListNode *head;
     ListNode *tail;
 }List;
@@ -34,8 +35,6 @@ inline void List_removeNode(List* list, ListNode* node);
 
 /*inserts 'value' at index position 'index' in the list*/
 int List_Insert(List *list, void *value ,int index);
-/*same as 'List_PushBack'*/
-int List_Append(List *list, void *value);
 /*Inserts 'value' at the beginning of the list*/
 int List_PushFront(List *list, void *value);
 /*inserts 'value' at the end of the list*/
@@ -50,15 +49,12 @@ int List_RemoveFrist(List *list);
 int List_RemoveLast(List *list);
 
 
+int List_TakeNode(List *list, ListNode *node, char *buff);
 /*remove the item at index position 'index' and return it*/
 int List_TakeAt(List *list, void *buff, int index);
 /*remove the frist itme in the list and return it*/
-int List_TakeFrist(List *list, void *buff);
-/*remove the last imte in the list and return it*/
-int List_TakeLast(List *list, void *buff);
-/*same as 'MListTakeFrist'*/
 int List_PopFront(List *list, void *buff);
-/*same as 'MListTakeLast'*/
+/*remove the last imte in the list and return it*/
 int List_PopBack(List *list, void *buff);
 
 
@@ -73,7 +69,6 @@ void* List_At(List *list,int index);
 void* List_Frist(List *list);
 /*return the last item in the list*/
 void *List_Last(List *list);
-
 
 /*return 1 is list is empty*/
 int List_IsEmpty(List *list);

@@ -13,6 +13,7 @@ List* List_CreateNew(int size)
         link->size = size;
         link->head = 0;
         link->tail = 0;
+        link->count = 0;
     }
     return link;
 }
@@ -85,6 +86,7 @@ inline void List_AddNode(List* list, ListNode* pNode, ListNode* node)
     }else{
         pNode->next = node;
     }
+    list->count ++;
 }
 
 inline void List_removeNode(List* list, ListNode* node)
@@ -102,6 +104,7 @@ inline void List_removeNode(List* list, ListNode* node)
     if(list->tail == node){
         list->tail = node->previous;
     }
+    list->count --;
     List_DeleteNode(list,node);
 }
 
@@ -121,12 +124,6 @@ int List_Insert(List *list, void *value ,int index)
     List_AddNode(list,pNode,node);
 
     return 0;
-}
-
-/*inserts 'value' at the end of the list*/
-int List_Append(List *list, void *value)
-{
-    return List_PushBack(list,value);
 }
 
 /*Inserts 'value' at the beginning of the list*/
@@ -176,48 +173,34 @@ int List_RemoveLast(List *list)
     return 0;
 }
 
-/*remove the item at index position 'index' and return it*/
-int List_TakeAt(List *list, void *buff, int index)
-{
-    ListNode *pNode;
-    if(0==list || 0==buff || 0>index) return -1;
 
-    pNode = List_NodeAt(list,index);
-    if(0==pNode)return -1;
-    memcpy(buff,pNode->data,list->size);
-    List_removeNode(list,pNode);
+int List_TakeNode(List *list, ListNode *node, char *buff)
+{
+    if(0==list || 0==node || 0==buff) return -1;
+    memcpy(buff,node->data,list->size);
+    List_removeNode(list,node);
     return 0;
 }
 
-/*remove the frist itme in the list and return it*/
-int List_TakeFrist(List *list, void *buff)
+/*remove the item at index position 'index' and return it*/
+int List_TakeAt(List *list, void *buff, int index)
 {
-    return List_TakeAt(list,buff,0);
-}
-
-/*remove the last imte in the list and return it*/
-int List_TakeLast(List *list, void *buff)
-{
-    return List_TakeAt(list,buff,List_Count(list)-1);
+    if(0==list || 0==buff || 0>index) return -1;
+    return List_TakeNode(list,List_NodeAt(list,index),buff);
 }
 
 /*remove the frist itme in the list and return it*/
 int List_PopFront(List *list, void *buff)
 {
-    return List_TakeAt(list,buff,0);
+    if(0==list || 0==buff) return -1;
+    return List_TakeNode(list,list->head,buff);
 }
 
 /*remove the last imte in the list and return it*/
 int List_PopBack(List *list, void *buff)
 {
-    ListNode *pNode;
     if(0==list || 0==buff) return -1;
-
-    pNode = list->tail;
-    if(0==pNode)return -1;
-    memcpy(buff,pNode->data,list->size);
-    List_removeNode(list,pNode);
-    return 0;
+    return List_TakeNode(list,list->tail,buff);
 }
 
 /*replaces the item at index position index with value*/
@@ -237,8 +220,7 @@ int List_Replace(List *list, void *value, int index)
 inline ListNode *List_NodeAt(List *list, int index)
 {
     int n;
-    ListNode * node;
-
+    ListNode *node;
     if(0==list || 0>index) return 0;
     node = list->head;
     for(n=0;n<index;n++){
@@ -279,13 +261,7 @@ int List_IsEmpty(List *list)
 /*return the number of items in the list*/
 int List_Count(List *list)
 {
-    int num = 0;
-    List_Foreach_Variable;
-    if(0==list) return -1;
-    List_Foreach(list){
-        num++;
-    }
-    return num;
+    return (0==list)?(-1):(list->count);
 }
 
 /*return the number of occurrences of 'value' in the list*/

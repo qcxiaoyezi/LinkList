@@ -17,18 +17,18 @@ int main()
 	}
 	
     v=0;
-    List_Append(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
     v=1;
-    List_Append(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
     v=2;
-    List_Append(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
     v=3;
-    List_Append(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
     v=4;
-    List_Append(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
     v=5;
-    List_Append(a,(void*)&v);
-    List_Append(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
+    List_PushBack(a,(void*)&v);
 
     int val;
 
